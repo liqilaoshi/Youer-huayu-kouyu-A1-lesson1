@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學華語向前走 - 第一課：你好！</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Noto Sans TC & Fredoka for friendly rounded vibes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <!-- Tone.js for cheerful synthesized game sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Fredoka"', '"Noto Sans TC"', 'sans-serif'],
+                    },
+                    colors: {
+                        cream: '#FFFDF7',
+                        sunshine: '#FFD93D',
+                        coral: '#FF6B6B',
+                        mint: '#4ECDC4',
+                        sky: '#45B7D1',
+                        lavender: '#A78BFA',
+                        peach: '#FFB085'
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 2.5s infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'pop': 'pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-4deg)' },
+                            '50%': { transform: 'rotate(4deg)' },
+                        },
+                        pop: {
+                            '0%': { transform: 'scale(0.8)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FFFDF7;
+            background-image: radial-gradient(#FDE68A 1.5px, transparent 1.5px), radial-gradient(#BAE6FD 1.5px, #FFFDF7 1.5px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 3D Juicy Kid-Friendly Buttons */
+        .btn-3d {
+            transition: all 0.12s ease;
+            border-bottom-width: 6px;
+        }
+        .btn-3d:active {
+            transform: translateY(4px);
+            border-bottom-width: 2px;
+        }
+
+        /* Zhuyin Ruby Vertical Layout Styling */
+        .zhuyin-word {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 3px;
+            vertical-align: middle;
+        }
+        .char-main {
+            font-weight: 900;
+            line-height: 1.1;
+        }
+        .zhuyin-box {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.42em;
+            line-height: 1.05;
+            margin-left: 2px;
+            color: #E11D48;
+            font-weight: 700;
+            position: relative;
+        }
+        .zhuyin-tone-right {
+            position: absolute;
+            right: -0.55em;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9em;
+        }
+        .zhuyin-tone-top {
+            line-height: 0.6;
+            margin-bottom: 1px;
+        }
+
+        /* Soundwave animation for Speaking Practice */
+        .wave-bar {
+            width: 8px;
+            height: 16px;
+            border-radius: 9999px;
+            background-color: #FF6B6B;
+            transition: height 0.15s ease;
+        }
+        .recording .wave-bar:nth-child(1) { animation: soundWave 0.6s infinite ease-in-out 0.0s; }
+        .recording .wave-bar:nth-child(2) { animation: soundWave 0.6s infinite ease-in-out 0.15s; }
+        .recording .wave-bar:nth-child(3) { animation: soundWave 0.6s infinite ease-in-out 0.3s; }
+        .recording .wave-bar:nth-child(4) { animation: soundWave 0.6s infinite ease-in-out 0.45s; }
+        .recording .wave-bar:nth-child(5) { animation: soundWave 0.6s infinite ease-in-out 0.2s; }
+
+        @keyframes soundWave {
+            0%, 100% { height: 14px; }
+            50% { height: 52px; }
+        }
+
+        /* Hide scrollbars cleanly */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-slate-800 pb-10">
+
+    <!-- ==================== TOP HEADER & REWARD BAR ==================== -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-4 border-amber-200 shadow-sm px-3 py-2.5 sm:px-6">
+        <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-2">
+            
+            <!-- Brand / Lesson Title -->
+            <div class="flex items-center gap-2.5">
+                <div class="w-11 h-11 sm:w-12 sm:h-12 bg-amber-400 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl shadow-inner border-2 border-amber-500 animate-float">
+                    🐼
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="bg-rose-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">基礎冊 第一課</span>
+                        <span class="hidden sm:inline-block text-xs font-bold text-amber-600 bg-amber-100 px-2 py-0.5 rounded-full">大班幼小銜接</span>
+                    </div>
+                    <h1 class="text-lg sm:text-xl font-black text-slate-800 tracking-wide">學華語向前走：你好！</h1>
+                </div>
+            </div>
+
+            <!-- Controls: Phonetic Toggle, Star Counter, Teacher Guide -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Phonetic Mode Switcher (注音 / 拼音 / 國字) -->
+                <button id="phoneticToggleBtn" onclick="cyclePhoneticMode()" 
+                    class="btn-3d bg-sky-100 hover:bg-sky-200 text-sky-800 border-sky-300 font-bold text-xs sm:text-sm px-3 py-2 rounded-2xl flex items-center gap-1.5"
+                    title="切換注音或漢語拼音">
+                    <span>🔤</span>
+                    <span id="phoneticModeLabel">注音模式</span>
+                </button>
+
+                <!-- Star & Sticker Counter -->
+                <button onclick="openStickerModal()" 
+                    class="btn-3d bg-amber-100 hover:bg-amber-200 text-amber-900 border-amber-300 font-black text-sm sm:text-base px-3.5 py-2 rounded-2xl flex items-center gap-1.5">
+                    <span class="text-xl animate-wiggle">⭐</span>
+                    <span id="starCountDisplay">0</span>
+                    <span class="hidden md:inline text-xs font-bold text-amber-700 ml-1">貼紙簿</span>
+                </button>
+
+                <!-- Parent / Teacher Guide Modal Trigger -->
+                <button onclick="toggleGuideModal(true)" 
+                    class="btn-3d bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-300 font-bold text-xs sm:text-sm px-3 py-2 rounded-2xl flex items-center gap-1"
+                    title="家長與老師指導手冊">
+                    <span>👩‍🏫</span>
+                    <span class="hidden sm:inline">教學錦囊</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== NAVIGATION TABS (5 FUN MODULES) ==================== -->
+    <nav class="max-w-5xl w-full mx-auto px-3 pt-4 pb-2">
+        <div class="grid grid-cols-5 gap-1.5 sm:gap-3">
+            <button onclick="switchTab('story')" id="tab-story" class="nav-tab btn-3d flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2.5 px-1 sm:px-3 rounded-2xl font-black text-xs sm:text-base bg-rose-500 text-white border-rose-700 shadow-md">
+                <span class="text-xl sm:text-2xl">🏫</span>
+                <span>生活劇場</span>
+            </button>
+            <button onclick="switchTab('vocab')" id="tab-vocab" class="nav-tab btn-3d flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2.5 px-1 sm:px-3 rounded-2xl font-black text-xs sm:text-base bg-white text-slate-600 border-slate-200 hover:bg-amber-50">
+                <span class="text-xl sm:text-2xl">🃏</span>
+                <span>字卡寶庫</span>
+            </button>
+            <button onclick="switchTab('game1')" id="tab-game1" class="nav-tab btn-3d flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2.5 px-1 sm:px-3 rounded-2xl font-black text-xs sm:text-base bg-white text-slate-600 border-slate-200 hover:bg-emerald-50">
+                <span class="text-xl sm:text-2xl">👂</span>
+                <span>聽音辨圖</span>
+            </button>
+            <button onclick="switchTab('game2')" id="tab-game2" class="nav-tab btn-3d flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2.5 px-1 sm:px-3 rounded-2xl font-black text-xs sm:text-base bg-white text-slate-600 border-slate-200 hover:bg-sky-50">
+                <span class="text-xl sm:text-2xl">🎭</span>
+                <span>禮貌小達人</span>
+            </button>
+            <button onclick="switchTab('game3')" id="tab-game3" class="nav-tab btn-3d flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2.5 px-1 sm:px-3 rounded-2xl font-black text-xs sm:text-base bg-white text-slate-600 border-slate-200 hover:bg-purple-50">
+                <span class="text-xl sm:text-2xl">🎤</span>
+                <span>小小跟讀家</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-3 sm:px-4 pt-2">
+
+        <!-- ============================================================ -->
+        <!-- MODULE 1: INTERACTIVE STORY & DIALOGUE (生活對話小劇場)       -->
+        <!-- ============================================================ -->
+        <section id="section-story" class="module-section animate-pop">
+            <div class="bg-white rounded-3xl border-4 border-rose-200 shadow-lg overflow-hidden">
+                <!-- Scene Header -->
+                <div class="bg-gradient-to-r from-rose-100 via-amber-100 to-sky-100 px-5 py-4 border-b-2 border-rose-100 flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-black text-rose-700 flex items-center gap-2">
+                            <span>🌞</span> 第一課對話：開學第一天！
+                        </h2>
+                        <p class="text-sm font-bold text-slate-600 mt-0.5">點一點人物或對話框，聽聽大家怎麼打招呼！</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="playAllDialogues()" id="playAllBtn" class="btn-3d bg-rose-500 hover:bg-rose-600 text-white border-rose-700 font-bold text-sm px-4 py-2.5 rounded-2xl flex items-center gap-2">
+                            <span>▶️</span> 連續播放故事
+                        </button>
+                        <button onclick="toggleRoleplayMode()" id="roleplayToggleBtn" class="btn-3d bg-amber-400 hover:bg-amber-500 text-amber-950 border-amber-600 font-bold text-sm px-4 py-2.5 rounded-2xl flex items-center gap-1.5">
+                            <span>🎭</span> <span id="roleplayBtnText">扮演模式：關</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- School Scene Backdrop Banner -->
+                <div class="bg-gradient-to-b from-sky-100 to-emerald-50 px-4 py-3 flex items-center justify-around border-b-2 border-emerald-100 text-center">
+                    <div class="flex flex-col items-center">
+                        <span class="text-3xl sm:text-4xl">🏫</span>
+                        <span class="text-xs font-bold text-sky-800 mt-1">快樂幼兒園</span>
+                    </div>
+                    <div class="text-sm sm:text-base font-bold text-emerald-800 bg-white/80 px-4 py-1.5 rounded-full shadow-sm">
+                        💡 提示：在「扮演模式」中，試著幫小華配音喔！
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-3xl sm:text-4xl">🌻</span>
+                        <span class="text-xs font-bold text-emerald-800 mt-1">大班教室</span>
+                    </div>
+                </div>
+
+                <!-- Dialogue List -->
+                <div id="dialogueContainer" class="p-4 sm:p-6 space-y-4 bg-amber-50/30">
+                    <!-- Rendered dynamically via JS -->
+                </div>
+
+                <!-- Interactive Bonus Chitchat Bar -->
+                <div class="bg-rose-50 px-5 py-4 border-t-2 border-rose-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div class="flex items-center gap-2 text-rose-800 font-bold text-sm sm:text-base">
+                        <span class="text-2xl">💬</span>
+                        <span>生活延伸對話：點按鈕跟老師說說看！</span>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <button onclick="speakPhrase('老師早安！', true)" class="btn-3d bg-white hover:bg-amber-100 text-slate-800 border-amber-300 font-bold text-sm px-3.5 py-2 rounded-xl">
+                            ☀️ 老師早安！
+                        </button>
+                        <button onclick="speakPhrase('同學你好！', true)" class="btn-3d bg-white hover:bg-sky-100 text-slate-800 border-sky-300 font-bold text-sm px-3.5 py-2 rounded-xl">
+                            👋 同學你好！
+                        </button>
+                        <button onclick="speakPhrase('謝謝老師，再見！', true)" class="btn-3d bg-white hover:bg-emerald-100 text-slate-800 border-emerald-300 font-bold text-sm px-3.5 py-2 rounded-xl">
+                            🎒 謝謝老師，再見！
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- MODULE 2: ILLUSTRATED VOCABULARY CARDS (趣味字卡寶庫)        -->
+        <!-- ============================================================ -->
+        <section id="section-vocab" class="module-section hidden animate-pop">
+            <div class="bg-white rounded-3xl border-4 border-amber-200 shadow-lg p-4 sm:p-6">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-black text-amber-700 flex items-center gap-2">
+                            <span>🃏</span> 第一課生詞寶庫
+                        </h2>
+                        <p class="text-sm font-bold text-slate-600">點擊每一張字卡聽發音，集滿全部字卡可以獲得星星獎勵喔！</p>
+                    </div>
+                    <div class="bg-amber-100 text-amber-900 font-black px-4 py-2 rounded-2xl text-sm border-2 border-amber-300">
+                        已學會：<span id="vocabLearnedCount">0</span> / <span id="vocabTotalCount">8</span> 個詞語
+                    </div>
+                </div>
+
+                <!-- Vocabulary Grid -->
+                <div id="vocabGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                    <!-- Rendered via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- MODULE 3: GAME 1 - LISTEN & MATCH (聽音辨圖大挑戰)           -->
+        <!-- ============================================================ -->
+        <section id="section-game1" class="module-section hidden animate-pop">
+            <div class="bg-white rounded-3xl border-4 border-emerald-200 shadow-lg p-5 sm:p-8 text-center">
+                <div class="inline-block bg-emerald-100 text-emerald-800 font-black text-xs sm:text-sm px-3.5 py-1 rounded-full mb-2">
+                    遊戲一：耳朵靈敏大考驗
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-800 mb-2">👂 聽音辨圖</h2>
+                <p class="text-slate-600 font-bold text-sm sm:text-base mb-6">先按大喇叭聽聽看是什麼詞語，再選出正確的圖片！</p>
+
+                <!-- Big Speaker Button -->
+                <div class="flex flex-col items-center justify-center mb-8">
+                    <button onclick="playGame1Prompt()" id="game1SpeakerBtn" 
+                        class="btn-3d w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-b from-emerald-400 to-emerald-500 hover:from-emerald-500 hover:to-emerald-600 text-white border-emerald-700 shadow-xl flex flex-col items-center justify-center gap-1 group">
+                        <span class="text-4xl sm:text-5xl group-hover:scale-110 transition-transform">🔊</span>
+                        <span class="text-xs sm:text-sm font-black tracking-wider">點我聽聲音</span>
+                    </button>
+                    <div id="game1HintText" class="mt-3 text-sm font-bold text-emerald-700 bg-emerald-50 px-4 py-1.5 rounded-full">
+                        題目進度：第 <span id="game1Round">1</span> / 5 題
+                    </div>
+                </div>
+
+                <!-- 3 Picture Options -->
+                <div id="game1Options" class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                    <!-- Rendered via JS -->
+                </div>
+
+                <!-- Feedback Banner -->
+                <div id="game1Feedback" class="mt-6 min-h-[3.5rem] flex items-center justify-center"></div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- MODULE 4: GAME 2 - DAILY SCENARIO ROLEPLAY (禮貌生活小劇場)  -->
+        <!-- ============================================================ -->
+        <section id="section-game2" class="module-section hidden animate-pop">
+            <div class="bg-white rounded-3xl border-4 border-sky-200 shadow-lg p-5 sm:p-8">
+                <div class="text-center mb-6">
+                    <div class="inline-block bg-sky-100 text-sky-800 font-black text-xs sm:text-sm px-3.5 py-1 rounded-full mb-2">
+                        遊戲二：日常對話反應王
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-800">🎭 禮貌小達人</h2>
+                    <p class="text-slate-600 font-bold text-sm sm:text-base mt-1">看看發生了什麼事，幫主角選出最有禮貌的回答！</p>
+                </div>
+
+                <!-- Scenario Card -->
+                <div id="game2Card" class="max-w-2xl mx-auto bg-gradient-to-b from-sky-50 to-indigo-50 rounded-3xl border-3 border-sky-200 p-5 sm:p-6 shadow-inner">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="bg-sky-500 text-white font-black text-xs px-3 py-1 rounded-full">情境 <span id="game2Index">1</span> / 4</span>
+                        <button onclick="readGame2Scenario()" class="btn-3d bg-white hover:bg-sky-100 text-sky-700 border-sky-300 font-bold text-xs sm:text-sm px-3 py-1.5 rounded-xl flex items-center gap-1">
+                            <span>🔊</span> 唸出題目
+                        </button>
+                    </div>
+
+                    <div class="text-center my-4">
+                        <div id="game2Emoji" class="text-6xl sm:text-7xl mb-3 animate-bounce-slow">🌅</div>
+                        <h3 id="game2Title" class="text-xl sm:text-2xl font-black text-slate-800 mb-2">早上到學校門口</h3>
+                        <p id="game2Desc" class="text-base sm:text-lg font-bold text-slate-600 bg-white/90 p-3.5 rounded-2xl border border-sky-100">
+                            早上來到幼兒園，看到陳老師站在門口微笑，你應該怎麼說？
+                        </p>
+                    </div>
+
+                    <!-- Choices -->
+                    <div id="game2Choices" class="space-y-3 mt-5">
+                        <!-- Rendered via JS -->
+                    </div>
+
+                    <div id="game2Feedback" class="mt-4 text-center min-h-[2.5rem]"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- MODULE 5: GAME 3 - LISTEN & REPEAT STUDIO (小小跟讀家)       -->
+        <!-- ============================================================ -->
+        <section id="section-game3" class="module-section hidden animate-pop">
+            <div class="bg-white rounded-3xl border-4 border-purple-200 shadow-lg p-5 sm:p-8 text-center">
+                <div class="inline-block bg-purple-100 text-purple-800 font-black text-xs sm:text-sm px-3.5 py-1 rounded-full mb-2">
+                    遊戲三：開口說華語練習室
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-800 mb-1">🎤 小小跟讀家</h2>
+                <p class="text-slate-600 font-bold text-sm sm:text-base mb-6">先聽老師唸一遍，再按下麥克風大聲跟著唸出來！</p>
+
+                <!-- Practice Card -->
+                <div class="max-w-xl mx-auto bg-gradient-to-b from-purple-50 to-pink-50 rounded-3xl border-3 border-purple-200 p-6 shadow-md">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-black text-purple-700 bg-purple-200/70 px-3 py-1 rounded-full">
+                            第 <span id="speakIdx">1</span> / <span id="speakTotal">6</span> 句
+                        </span>
+                        <div class="flex gap-1.5">
+                            <button onclick="prevSpeakCard()" class="btn-3d bg-white text-slate-700 border-slate-300 px-3 py-1 rounded-xl font-bold text-sm">⬅️ 上一句</button>
+                            <button onclick="nextSpeakCard()" class="btn-3d bg-white text-slate-700 border-slate-300 px-3 py-1 rounded-xl font-bold text-sm">下一句 ➡️</button>
+                        </div>
+                    </div>
+
+                    <div id="speakEmoji" class="text-6xl my-3">👋</div>
+                    <div id="speakPhraseDisplay" class="text-3xl sm:text-5xl font-black text-slate-800 my-4 tracking-wider">
+                        <!-- Dynamic Ruby text -->
+                    </div>
+                    <p id="speakContext" class="text-sm font-bold text-purple-700 mb-6">見面打招呼的時候說</p>
+
+                    <!-- Soundwave Visualizer -->
+                    <div id="soundwaveBox" class="h-14 flex items-center justify-center gap-2 mb-5">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+
+                    <!-- Action Buttons: Listen vs Speak -->
+                    <div class="flex flex-wrap items-center justify-center gap-4">
+                        <button onclick="listenSpeakCard()" class="btn-3d bg-sky-400 hover:bg-sky-500 text-white border-sky-600 font-black text-base sm:text-lg px-6 py-3.5 rounded-2xl flex items-center gap-2">
+                            <span>🔊</span> 1. 聽老師唸
+                        </button>
+
+                        <button onclick="startSpeakingPractice()" id="micPracticeBtn" class="btn-3d bg-rose-500 hover:bg-rose-600 text-white border-rose-700 font-black text-base sm:text-lg px-6 py-3.5 rounded-2xl flex items-center gap-2">
+                            <span>🎙️</span> <span id="micBtnLabel">2. 按我大聲跟讀</span>
+                        </button>
+                    </div>
+
+                    <!-- Result / Badge Area -->
+                    <div id="speakFeedback" class="mt-5 min-h-[3.5rem] flex flex-col items-center justify-center"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== STICKER COLLECTION MODAL ==================== -->
+    <div id="stickerModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl border-4 border-amber-300 max-w-lg w-full p-6 shadow-2xl animate-pop text-center">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-2xl font-black text-amber-700 flex items-center gap-2">
+                    <span>🏆</span> 我的華語星星貼紙簿
+                </h3>
+                <button onclick="closeStickerModal()" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 font-black text-slate-600">✕</button>
+            </div>
+            <p class="text-sm font-bold text-slate-600 mb-4">每收集 3 顆星星，就能解鎖一張可愛動物貼紙喔！</p>
+            
+            <div id="stickerGrid" class="grid grid-cols-3 gap-3 mb-5">
+                <!-- Populated by JS -->
+            </div>
+
+            <button onclick="closeStickerModal()" class="btn-3d w-full bg-amber-400 hover:bg-amber-500 text-amber-950 border-amber-600 font-black py-3 rounded-2xl text-lg">
+                繼續學習集星星！
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== PARENT & TEACHER GUIDE MODAL ==================== -->
+    <div id="guideModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl border-4 border-purple-300 max-w-2xl w-full max-h-[88vh] overflow-y-auto p-6 shadow-2xl animate-pop">
+            <div class="flex items-center justify-between border-b-2 border-purple-100 pb-3 mb-4">
+                <h3 class="text-xl sm:text-2xl font-black text-purple-800 flex items-center gap-2">
+                    <span>👩‍🏫</span> 家長與老師教學錦囊（大班幼小銜接）
+                </h3>
+                <button onclick="toggleGuideModal(false)" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 font-black text-slate-600">✕</button>
+            </div>
+
+            <div class="space-y-4 text-sm sm:text-base text-slate-700 leading-relaxed">
+                <div class="bg-purple-50 p-4 rounded-2xl border border-purple-200">
+                    <h4 class="font-black text-purple-900 mb-1">📘 教材設計理念（《學華語向前走》基礎冊 第一課）</h4>
+                    <p>專為 <strong>4–6 歲海外零基礎幼兒</strong> 設計，以「<strong>聽說先行、生活情境化、遊戲化互動</strong>」為核心，幫助幼兒自然適應小學課堂指令與禮貌用語，無痛銜接小學一年級華語課程。</p>
+                </div>
+
+                <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200">
+                    <h4 class="font-black text-amber-900 mb-1">🗣️ 課堂與親子互動引導步驟</h4>
+                    <ul class="list-disc pl-5 space-y-1.5 font-medium">
+                        <li><strong>第一步（暖身破冰）：</strong>使用「生活劇場」，讓孩子先聽老師與同學的對話。可開啟<strong>「扮演模式」</strong>，由大人唸陳老師、孩子扮演小華或小明。</li>
+                        <li><strong>第二步（視覺連結）：</strong>在「字卡寶庫」中搭配誇張的肢體動作（例如說「你好」時揮手、說「謝謝」時雙手抱拳或點頭），強化大腦記憶。</li>
+                        <li><strong>第三步（幼小銜接小任務）：</strong>每天出門或睡前，鼓勵孩子用本課句型跟家人說：「爸爸早安」、「謝謝媽媽」、「明天見！」。</li>
+                    </ul>
+                </div>
+
+                <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
+                    <h4 class="font-black text-sky-900 mb-1">🔤 注音符號與漢語拼音切換說明</h4>
+                    <p>點擊右上角的 <strong>「注音模式 / 拼音模式 / 純國字」</strong> 按鈕，可依據海外不同地區（台灣正體注音或海外雙語拼音系統）彈性調整標音顯示，讓孩子在幼兒階段先以「圖像與聲音」建立語感，不強迫硬背書寫。</p>
+                </div>
+            </div>
+
+            <div class="mt-6 text-center">
+                <button onclick="toggleGuideModal(false)" class="btn-3d bg-purple-500 hover:bg-purple-600 text-white border-purple-700 font-black px-8 py-3 rounded-2xl">
+                    我知道了，開始上課！
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== FLOATING CELEBRATION TOAST ==================== -->
+    <div id="celebrationToast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 transform translate-y-4">
+        <div class="bg-amber-400 text-amber-950 border-4 border-white shadow-2xl px-6 py-3 rounded-full font-black text-base sm:text-lg flex items-center gap-2">
+            <span class="text-2xl">🌟</span>
+            <span id="toastMessage">好棒喔！獲得 1 顆星星！</span>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT APPLICATION LOGIC ==================== -->
+    <script>
+        /* ----------------------------------------------------------------
+           1. CURRICULUM DATA (學華語向前走 基礎冊 第一課：你好！)
+           Includes Traditional Chinese, Zhuyin (with tone positioning), & Pinyin
+        ---------------------------------------------------------------- */
+        
+        // Character Phonetic Dictionary for accurate Zhuyin & Pinyin rendering
+        const CHAR_MAP = {
+            '你': { z: 'ㄋㄧ', t: 'ˇ', p: 'nǐ' },
+            '好': { z: 'ㄏㄠ', t: 'ˇ', p: 'hǎo' },
+            '我': { z: 'ㄨㄛ', t: 'ˇ', p: 'wǒ' },
+            '是': { z: 'ㄕ', t: 'ˋ', p: 'shì' },
+            '陳': { z: 'ㄔㄣ', t: 'ˊ', p: 'chén' },
+            '老': { z: 'ㄌㄠ', t: 'ˇ', p: 'lǎo' },
+            '師': { z: 'ㄕ', t: '', p: 'shī' },
+            '小': { z: 'ㄒㄧㄠ', t: 'ˇ', p: 'xiǎo' },
+            '明': { z: 'ㄇㄧㄥ', t: 'ˊ', p: 'míng' },
+            '華': { z: 'ㄏㄨㄚ', t: 'ˊ', p: 'huá' },
+            '同': { z: 'ㄊㄨㄥ', t: 'ˊ', p: 'tóng' },
+            '學': { z: 'ㄒㄩㄝ', t: 'ˊ', p: 'xué' },
+            '早': { z: 'ㄗㄠ', t: 'ˇ', p: 'zǎo' },
+            '安': { z: 'ㄢ', t: '', p: 'ān' },
+            '謝': { z: 'ㄒㄧㄝ', t: 'ˋ', p: 'xiè' },
+            '再': { z: 'ㄗㄞ', t: 'ˋ', p: 'zài' },
+            '見': { z: 'ㄐㄧㄢ', t: 'ˋ', p: 'jiàn' },
+            '們': { z: 'ㄇㄣ', t: '˙', p: 'men' },
+            '請': { z: 'ㄑㄧㄥ', t: 'ˇ', p: 'qǐng' },
+            '坐': { z: 'ㄗㄨㄛ', t: 'ˋ', p: 'zuò' }
+        };
+
+        // Phonetic Display Modes: 'zhuyin' | 'pinyin' | 'none'
+        let phoneticMode = 'zhuyin';
+        let roleplayMode = false;
+        let stars = 0;
+        let learnedVocabSet = new Set();
+
+        // Lesson 1 Dialogue Data
+        const DIALOGUES = [
+            {
+                id: 1,
+                speaker: '陳老師',
+                role: 'teacher',
+                avatar: '👩‍🏫',
+                bg: 'bg-rose-100',
+                border: 'border-rose-300',
+                text: '小朋友，你們好！我是陳老師。',
+                cleanSpeech: '小朋友，你們好！我是陳老師。',
+                englishHint: 'Hello children! I am Teacher Chen.'
+            },
+            {
+                id: 2,
+                speaker: '小明',
+                role: 'student',
+                avatar: '👦',
+                bg: 'bg-sky-100',
+                border: 'border-sky-300',
+                text: '陳老師好！我是小明。',
+                cleanSpeech: '陳老師好！我是小明。',
+                englishHint: 'Hello Teacher Chen! I am Xiaoming.'
+            },
+            {
+                id: 3,
+                speaker: '小華',
+                role: 'child-role', // Highlighted in Roleplay mode!
+                avatar: '👧',
+                bg: 'bg-amber-100',
+                border: 'border-amber-300',
+                text: '老師好，同學好！我是小華。',
+                cleanSpeech: '老師好，同學好！我是小華。',
+                englishHint: 'Hello Teacher, hello classmates! I am Xiaohua.'
+            },
+            {
+                id: 4,
+                speaker: '陳老師',
+                role: 'teacher',
+                avatar: '👩‍🏫',
+                bg: 'bg-rose-100',
+                border: 'border-rose-300',
+                text: '小明、小華，早安！請坐。',
+                cleanSpeech: '小明、小華，早安！請坐。',
+                englishHint: 'Good morning Xiaoming and Xiaohua! Please sit down.'
+            },
+            {
+                id: 5,
+                speaker: '小明 & 小華',
+                role: 'child-role',
+                avatar: '👫',
+                bg: 'bg-emerald-100',
+                border: 'border-emerald-300',
+                text: '謝謝老師！',
+                cleanSpeech: '謝謝老師！',
+                englishHint: 'Thank you, Teacher!'
+            }
+        ];
+
+        // Lesson 1 Core Vocabulary
+        const VOCABULARY = [
+            { id: 'v1', word: '你好', emoji: '👋', color: 'from-rose-100 to-rose-200 border-rose-300', desc: '見面打招呼' },
+            { id: 'v2', word: '早安', emoji: '🌅', color: 'from-amber-100 to-amber-200 border-amber-300', desc: '早上好！' },
+            { id: 'v3', word: '老師', emoji: '👩‍🏫', color: 'from-purple-100 to-purple-200 border-purple-300', desc: '教我們學習的人' },
+            { id: 'v4', word: '同學', emoji: '🎒', color: 'from-sky-100 to-sky-200 border-sky-300', desc: '一起上課的朋友' },
+            { id: 'v5', word: '我是', emoji: '🙋', color: 'from-orange-100 to-orange-200 border-orange-300', desc: '介紹自己的名字' },
+            { id: 'v6', word: '謝謝', emoji: '🙏', color: 'from-emerald-100 to-emerald-200 border-emerald-300', desc: '表達感謝很有禮貌' },
+            { id: 'v7', word: '請坐', emoji: '🪑', color: 'from-teal-100 to-teal-200 border-teal-300', desc: '請大家坐下來' },
+            { id: 'v8', word: '再見', emoji: '🚌', color: 'from-indigo-100 to-indigo-200 border-indigo-300', desc: '放學回家說拜拜' }
+        ];
+
+        // Game 2 Scenarios (Daily Roleplay)
+        const SCENARIOS = [
+            {
+                emoji: '🌅',
+                title: '早上來到學校門口',
+                desc: '太陽公公起床了！你在學校門口看到陳老師，應該怎麼跟老師打招呼？',
+                choices: [
+                    { text: '陳老師，早安！', correct: true, reply: '太棒了！早上見面說「早安」非常有禮貌！' },
+                    { text: '老師，再見！', correct: false, reply: '哎呀，「再見」是放學回家的時候說的喔，再試一次！' },
+                    { text: '謝謝老師！', correct: false, reply: '這是道謝的話喔，早上見面要說什麼呢？' }
+                ]
+            },
+            {
+                emoji: '🎁',
+                title: '老師送你一顆小貼紙',
+                desc: '陳老師誇獎你坐得很端正，送給你一張可愛的熊貓貼紙，你要說什麼？',
+                choices: [
+                    { text: '我是小華！', correct: false, reply: '這是介紹名字喔，收到禮物要說感謝的話！' },
+                    { text: '謝謝老師！', correct: true, reply: '答對了！收到別人的幫忙或禮物要說「謝謝」！' },
+                    { text: '請坐！', correct: false, reply: '這是請別人坐下的意思喔，再想一想！' }
+                ]
+            },
+            {
+                emoji: '🧑‍🤝‍🧑',
+                title: '認識新朋友',
+                desc: '班上來了一位新同學，你想跟他做朋友並介紹自己，該怎麼說？',
+                choices: [
+                    { text: '你好！我是小華。', correct: true, reply: '好厲害！先說「你好」，再說「我是...」介紹自己！' },
+                    { text: '同學再見！', correct: false, reply: '才剛見面就要走嗎？先跟他打聲招呼吧！' },
+                    { text: '老師早安！', correct: false, reply: '這位是新同學，不是老師喔！' }
+                ]
+            },
+            {
+                emoji: '🌇',
+                title: '放學了，媽媽來接你回家',
+                desc: '下課鐘聲響了，要跟老師和同學說拜拜，你應該怎麼說？',
+                choices: [
+                    { text: '早安！', correct: false, reply: '現在已經下午放學囉！' },
+                    { text: '老師再見，同學再見！', correct: true, reply: '滿分！放學回家跟大家揮揮手說「再見」！' },
+                    { text: '請坐！', correct: false, reply: '都要回家囉，不是請坐喔！' }
+                ]
+            }
+        ];
+
+        // Game 3 Speaking Practice Phrases
+        const SPEAKING_CARDS = [
+            { phrase: '你好！', emoji: '👋', context: '見面時微笑揮手打招呼' },
+            { phrase: '老師早安！', emoji: '☀️', context: '早上看到老師很有精神地說' },
+            { phrase: '我是小明。', emoji: '🙋‍♂️', context: '指著自己，大聲介紹名字（也可以換成你的名字喔！）' },
+            { phrase: '同學好！', emoji: '👫', context: '跟班上的好朋友打招呼' },
+            { phrase: '謝謝老師！', emoji: '💖', context: '老師幫忙或送小禮物時說' },
+            { phrase: '再見！', emoji: '🌈', context: '放學回家跟大家說拜拜' }
+        ];
+
+        // Sticker Milestones
+        const STICKERS = [
+            { req: 1, icon: '🐼', name: '乖寶寶熊貓' },
+            { req: 3, icon: '🦁', name: '勇敢小獅子' },
+            { req: 6, icon: '🐰', name: '禮貌小兔兔' },
+            { req: 9, icon: '🦖', name: '超級小恐龍' },
+            { req: 12, icon: '🦄', name: '閃亮獨角獸' },
+            { req: 15, icon: '👑', name: '華語小博士' }
+        ];
+
+        /* ----------------------------------------------------------------
+           2. PHONETIC RENDERER (Zhuyin / Pinyin / Plain Text)
+        ---------------------------------------------------------------- */
+        function renderAnnotatedText(text, sizeClass = 'text-xl sm:text-2xl') {
+            if (phoneticMode === 'none') {
+                return `<span class="font-black ${sizeClass}">${text}</span>`;
+            }
+
+            if (phoneticMode === 'pinyin') {
+                let html = `<span class="inline-flex flex-wrap items-end gap-x-1.5 gap-y-1 ${sizeClass}">`;
+                for (let ch of text) {
+                    const info = CHAR_MAP[ch];
+                    if (info) {
+                        html += `
+                            <span class="inline-flex flex-col items-center leading-tight">
+                                <span class="text-[0.45em] font-bold text-sky-600 tracking-tight">${info.p}</span>
+                                <span class="font-black">${ch}</span>
+                            </span>`;
+                    } else {
+                        html += `<span class="font-black self-end">${ch}</span>`;
+                    }
+                }
+                html += `</span>`;
+                return html;
+            }
+
+            // Default: Zhuyin Mode (注音符號 - 台灣正體標準排版)
+            let html = `<span class="inline-flex flex-wrap items-center gap-y-1 ${sizeClass}">`;
+            for (let ch of text) {
+                const info = CHAR_MAP[ch];
+                if (info) {
+                    const isNeutral = info.t === '˙';
+                    html += `
+                        <span class="zhuyin-word">
+                            <span class="char-main">${ch}</span>
+                            <span class="zhuyin-box">
+                                ${isNeutral ? `<span class="zhuyin-tone-top">˙</span>` : ''}
+                                <span>${info.z.split('').join('<br>')}</span>
+                                ${(!isNeutral && info.t) ? `<span class="zhuyin-tone-right">${info.t}</span>` : ''}
+                            </span>
+                        </span>`;
+                } else {
+                    html += `<span class="font-black mx-0.5">${ch}</span>`;
+                }
+            }
+            html += `</span>`;
+            return html;
+        }
+
+        function cyclePhoneticMode() {
+            playClickSound();
+            const label = document.getElementById('phoneticModeLabel');
+            if (phoneticMode === 'zhuyin') {
+                phoneticMode = 'pinyin';
+                label.textContent = '拼音模式';
+            } else if (phoneticMode === 'pinyin') {
+                phoneticMode = 'none';
+                label.textContent = '純國字';
+            } else {
+                phoneticMode = 'zhuyin';
+                label.textContent = '注音模式';
+            }
+            refreshAllViews();
+        }
+
+        /* ----------------------------------------------------------------
+           3. AUDIO ENGINE (Web Speech API zh-TW + Tone.js Sound Effects)
+        ---------------------------------------------------------------- */
+        let twVoice = null;
+
+        function loadVoices() {
+            if (!('speechSynthesis' in window)) return;
+            const voices = window.speechSynthesis.getVoices();
+            // Prioritize Taiwan Mandarin (zh-TW) female/warm voices
+            twVoice = voices.find(v => v.lang === 'zh-TW' && (v.name.includes('Mei-Jia') || v.name.includes('HsiaoChen') || v.name.includes('Google')))
+                   || voices.find(v => v.lang === 'zh-TW')
+                   || voices.find(v => v.lang.includes('zh'));
+        }
+
+        if ('speechSynthesis' in window) {
+            loadVoices();
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        function speakPhrase(text, reward = false, onEndCallback = null) {
+            if (!('speechSynthesis' in window)) {
+                if (onEndCallback) onEndCallback();
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            if (twVoice) utterance.voice = twVoice;
+            utterance.lang = 'zh-TW';
+            utterance.rate = 0.85; // Slightly slower & clearer for 4-6 year olds
+            utterance.pitch = 1.12; // Friendly warm tone
+
+            utterance.onend = () => {
+                if (onEndCallback) onEndCallback();
+            };
+            utterance.onerror = () => {
+                if (onEndCallback) onEndCallback();
+            };
+
+            window.speechSynthesis.speak(utterance);
+
+            if (reward) {
+                playPopSound();
+            }
+        }
+
+        // Cheerful synthesized sound effects using Tone.js
+        async function ensureTone() {
+            if (typeof Tone !== 'undefined' && Tone.context.state !== 'running') {
+                await Tone.start();
+            }
+        }
+
+        async function playClickSound() {
+            try {
+                await ensureTone();
+                const synth = new Tone.Synth({ oscillator: { type: 'sine' } }).toDestination();
+                synth.triggerAttackRelease('C5', '32n');
+            } catch (e) {}
+        }
+
+        async function playPopSound() {
+            try {
+                await ensureTone();
+                const synth = new Tone.Synth({ oscillator: { type: 'triangle' } }).toDestination();
+                synth.triggerAttackRelease('E5', '16n');
+            } catch (e) {}
+        }
+
+        async function playSuccessFanfare() {
+            try {
+                await ensureTone();
+                const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+                const now = Tone.now();
+                synth.triggerAttackRelease(['C5', 'E5', 'G5'], '16n', now);
+                synth.triggerAttackRelease(['C6', 'E6'], '8n', now + 0.14);
+            } catch (e) {}
+        }
+
+        async function playGentleTryAgain() {
+            try {
+                await ensureTone();
+                const synth = new Tone.Synth({ oscillator: { type: 'sine' } }).toDestination();
+                const now = Tone.now();
+                synth.triggerAttackRelease('E4', '16n', now);
+                synth.triggerAttackRelease('C4', '8n', now + 0.15);
+            } catch (e) {}
+        }
+
+        /* ----------------------------------------------------------------
+           4. REWARDS & NAVIGATION
+        ---------------------------------------------------------------- */
+        function addStar(amount = 1, customMsg = null) {
+            stars += amount;
+            document.getElementById('starCountDisplay').textContent = stars;
+            playSuccessFanfare();
+            showToast(customMsg || `太棒了！獲得 ${amount} 顆星星！`);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('celebrationToast');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.remove('opacity-0', 'translate-y-4');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 2400);
+        }
+
+        function switchTab(tabName) {
+            playClickSound();
+            window.speechSynthesis && window.speechSynthesis.cancel();
+
+            // Update tab button styles
+            const colors = {
+                story: 'bg-rose-500 text-white border-rose-700',
+                vocab: 'bg-amber-500 text-white border-amber-700',
+                game1: 'bg-emerald-500 text-white border-emerald-700',
+                game2: 'bg-sky-500 text-white border-sky-700',
+                game3: 'bg-purple-500 text-white border-purple-700'
+            };
+
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.className = 'nav-tab btn-3d flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2.5 px-1 sm:px-3 rounded-2xl font-black text-xs sm:text-base bg-white text-slate-600 border-slate-200 hover:bg-slate-50';
+            });
+
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            activeBtn.className = `nav-tab btn-3d flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2.5 px-1 sm:px-3 rounded-2xl font-black text-xs sm:text-base shadow-md ${colors[tabName]}`;
+
+            // Show active section
+            document.querySelectorAll('.module-section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById(`section-${tabName}`).classList.remove('hidden');
+
+            // Initialize game state when entering
+            if (tabName === 'game1') initGame1Round();
+            if (tabName === 'game2') renderGame2();
+            if (tabName === 'game3') renderSpeakCard();
+        }
+
+        /* ----------------------------------------------------------------
+           5. MODULE 1: STORY & DIALOGUE RENDERING
+        ---------------------------------------------------------------- */
+        function renderDialogues() {
+            const container = document.getElementById('dialogueContainer');
+            container.innerHTML = DIALOGUES.map((d, idx) => {
+                const isChildRole = roleplayMode && d.role === 'child-role';
+                return `
+                <div id="dialogue-row-${idx}" onclick="speakDialogueItem(${idx})"
+                    class="cursor-pointer transition-all duration-200 hover:scale-[1.01] rounded-3xl p-4 border-3 ${d.bg} ${d.border} ${isChildRole ? 'ring-4 ring-amber-400 shadow-lg' : 'shadow-sm'} flex items-center gap-3 sm:gap-5">
+                    
+                    <!-- Character Avatar -->
+                    <div class="flex-shrink-0 flex flex-col items-center">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-2xl border-2 ${d.border} flex items-center justify-center text-4xl sm:text-5xl shadow-sm">
+                            ${d.avatar}
+                        </div>
+                        <span class="mt-1.5 text-xs sm:text-sm font-black px-2.5 py-0.5 rounded-full bg-white/90 text-slate-800 shadow-xs">
+                            ${d.speaker}
+                        </span>
+                    </div>
+
+                    <!-- Speech Bubble -->
+                    <div class="flex-1 bg-white rounded-2xl p-3.5 sm:p-4 border-2 border-white shadow-xs relative">
+                        ${isChildRole ? `
+                            <div class="inline-flex items-center gap-1 bg-amber-400 text-amber-950 text-xs font-black px-2.5 py-0.5 rounded-full mb-1.5">
+                                <span>🎤</span> 輪到你當小華囉！大聲唸出來！
+                            </div>
+                        ` : ''}
+                        <div class="text-slate-800 leading-relaxed">
+                            ${renderAnnotatedText(d.text, 'text-xl sm:text-2xl')}
+                        </div>
+                        <div class="text-xs font-bold text-slate-400 mt-1.5">${d.englishHint}</div>
+                    </div>
+
+                    <!-- Play Audio Icon -->
+                    <button class="btn-3d flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white hover:bg-amber-50 border-slate-200 flex items-center justify-center text-2xl shadow-xs" aria-label="播放語音">
+                        🔊
+                    </button>
+                </div>`;
+            }).join('');
+        }
+
+        function speakDialogueItem(idx) {
+            const item = DIALOGUES[idx];
+            // Highlight active row
+            document.querySelectorAll('[id^="dialogue-row-"]').forEach(el => el.classList.remove('ring-4', 'ring-rose-400'));
+            const row = document.getElementById(`dialogue-row-${idx}`);
+            if (row) row.classList.add('ring-4', 'ring-rose-400');
+
+            speakPhrase(item.cleanSpeech, true, () => {
+                if (row) row.classList.remove('ring-4', 'ring-rose-400');
+            });
+        }
+
+        function playAllDialogues() {
+            let idx = 0;
+            const btn = document.getElementById('playAllBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span>🔊</span> 正在說故事...';
+
+            function playNext() {
+                if (idx >= DIALOGUES.length) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>▶️</span> 連續播放故事';
+                    addStar(1, '聽完完整故事了！獲得 1 顆星星！');
+                    return;
+                }
+                const item = DIALOGUES[idx];
+                document.querySelectorAll('[id^="dialogue-row-"]').forEach(el => el.classList.remove('ring-4', 'ring-rose-400'));
+                const row = document.getElementById(`dialogue-row-${idx}`);
+                if (row) {
+                    row.classList.add('ring-4', 'ring-rose-400');
+                    row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+
+                speakPhrase(item.cleanSpeech, false, () => {
+                    if (row) row.classList.remove('ring-4', 'ring-rose-400');
+                    idx++;
+                    setTimeout(playNext, 450);
+                });
+            }
+            playNext();
+        }
+
+        function toggleRoleplayMode() {
+            roleplayMode = !roleplayMode;
+            playClickSound();
+            document.getElementById('roleplayBtnText').textContent = roleplayMode ? '扮演模式：開' : '扮演模式：關';
+            renderDialogues();
+            if (roleplayMode) {
+                showToast('🎭 扮演模式開啟！看到黃色框框輪到你唸喔！');
+            }
+        }
+
+        /* ----------------------------------------------------------------
+           6. MODULE 2: VOCABULARY CARDS
+        ---------------------------------------------------------------- */
+        function renderVocabCards() {
+            const grid = document.getElementById('vocabGrid');
+            document.getElementById('vocabTotalCount').textContent = VOCABULARY.length;
+            document.getElementById('vocabLearnedCount').textContent = learnedVocabSet.size;
+
+            grid.innerHTML = VOCABULARY.map(v => {
+                const isLearned = learnedVocabSet.has(v.id);
+                return `
+                <button onclick="clickVocabCard('${v.id}', '${v.word}')"
+                    class="btn-3d relative bg-gradient-to-b ${v.color} rounded-3xl p-4 flex flex-col items-center justify-between text-center shadow-sm hover:brightness-105 transition-all">
+                    
+                    <!-- Learned Star Badge -->
+                    <div class="absolute top-2.5 right-2.5 text-lg">
+                        ${isLearned ? '⭐' : '⚪'}
+                    </div>
+
+                    <div class="text-5xl sm:text-6xl my-2 drop-shadow-xs">${v.emoji}</div>
+                    
+                    <div class="bg-white/95 w-full rounded-2xl py-2.5 px-2 my-1 shadow-xs">
+                        ${renderAnnotatedText(v.word, 'text-2xl sm:text-3xl')}
+                    </div>
+
+                    <span class="text-xs font-bold text-slate-700 mt-1.5">${v.desc}</span>
+                </button>`;
+            }).join('');
+        }
+
+        function clickVocabCard(id, word) {
+            speakPhrase(word, true);
+            if (!learnedVocabSet.has(id)) {
+                learnedVocabSet.add(id);
+                renderVocabCards();
+                if (learnedVocabSet.size === VOCABULARY.length) {
+                    addStar(2, '🎉 全部字卡都學會了！獎勵 2 顆星星！');
+                } else if (learnedVocabSet.size % 4 === 0) {
+                    addStar(1, '太棒了！學會 4 個生詞，獲得 1 顆星星！');
+                }
+            }
+        }
+
+        /* ----------------------------------------------------------------
+           7. MODULE 3: GAME 1 - LISTEN & MATCH (聽音辨圖)
+        ---------------------------------------------------------------- */
+        let game1CurrentTarget = null;
+        let game1RoundNum = 1;
+        let game1Locked = false;
+
+        function initGame1Round() {
+            game1Locked = false;
+            document.getElementById('game1Feedback').innerHTML = '';
+            document.getElementById('game1Round').textContent = game1RoundNum;
+
+            // Pick 3 random distinct vocabulary items
+            const shuffled = [...VOCABULARY].sort(() => Math.random() - 0.5);
+            const choices = shuffled.slice(0, 3);
+            game1CurrentTarget = choices[Math.floor(Math.random() * choices.length)];
+
+            const optionsContainer = document.getElementById('game1Options');
+            optionsContainer.innerHTML = choices.map(item => `
+                <button onclick="checkGame1Answer('${item.id}')"
+                    class="btn-3d bg-amber-50 hover:bg-amber-100 border-amber-300 rounded-3xl p-6 flex flex-col items-center justify-center gap-3 shadow-md group">
+                    <span class="text-6xl sm:text-7xl group-hover:scale-110 transition-transform">${item.emoji}</span>
+                    <span class="text-sm font-bold text-slate-500 bg-white px-3 py-1 rounded-full">${item.desc}</span>
+                </button>
+            `).join('');
+
+            // Automatically speak prompt after short delay
+            setTimeout(() => playGame1Prompt(), 350);
+        }
+
+        function playGame1Prompt() {
+            if (!game1CurrentTarget) return;
+            const btn = document.getElementById('game1SpeakerBtn');
+            btn.classList.add('scale-105', 'ring-4', 'ring-amber-300');
+            speakPhrase(game1CurrentTarget.word, false, () => {
+                btn.classList.remove('scale-105', 'ring-4', 'ring-amber-300');
+            });
+        }
+
+        function checkGame1Answer(selectedId) {
+            if (game1Locked) return;
+            const feedback = document.getElementById('game1Feedback');
+
+            if (selectedId === game1CurrentTarget.id) {
+                game1Locked = true;
+                addStar(1, `答對了！就是「${game1CurrentTarget.word}」！`);
+                feedback.innerHTML = `
+                    <div class="bg-emerald-100 border-2 border-emerald-400 text-emerald-900 px-6 py-3 rounded-2xl font-black text-lg flex items-center gap-3 animate-pop">
+                        <span>🎉 答對了！</span>
+                        ${renderAnnotatedText(game1CurrentTarget.word, 'text-2xl')}
+                        <button onclick="nextGame1Round()" class="btn-3d bg-emerald-500 text-white border-emerald-700 text-sm px-4 py-1.5 rounded-xl ml-2">
+                            下一題 ➡️
+                        </button>
+                    </div>`;
+                speakPhrase(`好棒！${game1CurrentTarget.word}`);
+            } else {
+                playGentleTryAgain();
+                feedback.innerHTML = `
+                    <div class="bg-rose-100 border-2 border-rose-300 text-rose-800 px-5 py-2.5 rounded-2xl font-bold text-base animate-pop">
+                        🤔 再聽一次看看喔！點一下上面的綠色大喇叭！
+                    </div>`;
+            }
+        }
+
+        function nextGame1Round() {
+            game1RoundNum = game1RoundNum >= 5 ? 1 : game1RoundNum + 1;
+            initGame1Round();
+        }
+
+        /* ----------------------------------------------------------------
+           8. MODULE 4: GAME 2 - DAILY SCENARIO ROLEPLAY (禮貌小達人)
+        ---------------------------------------------------------------- */
+        let game2Idx = 0;
+
+        function renderGame2() {
+            const sc = SCENARIOS[game2Idx];
+            document.getElementById('game2Index').textContent = game2Idx + 1;
+            document.getElementById('game2Emoji').textContent = sc.emoji;
+            document.getElementById('game2Title').textContent = sc.title;
+            document.getElementById('game2Desc').textContent = sc.desc;
+            document.getElementById('game2Feedback').innerHTML = '';
+
+            const choicesBox = document.getElementById('game2Choices');
+            choicesBox.innerHTML = sc.choices.map((c, i) => `
+                <button onclick="selectGame2Choice(${i})"
+                    class="btn-3d w-full bg-white hover:bg-sky-100 text-slate-800 border-sky-300 rounded-2xl p-4 text-left flex items-center justify-between gap-3 shadow-xs">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-full bg-sky-500 text-white font-black flex items-center justify-center text-sm">${i + 1}</span>
+                        <div>${renderAnnotatedText(c.text, 'text-lg sm:text-xl')}</div>
+                    </div>
+                    <span class="text-xl">💬</span>
+                </button>
+            `).join('');
+        }
+
+        function readGame2Scenario() {
+            const sc = SCENARIOS[game2Idx];
+            speakPhrase(`${sc.title}。${sc.desc}`, true);
+        }
+
+        function selectGame2Choice(choiceIndex) {
+            const sc = SCENARIOS[game2Idx];
+            const choice = sc.choices[choiceIndex];
+            const fb = document.getElementById('game2Feedback');
+
+            speakPhrase(choice.text, false, () => {
+                if (choice.correct) {
+                    addStar(1, '最有禮貌的小達人！獲得 1 顆星星！');
+                    fb.innerHTML = `
+                        <div class="bg-emerald-100 border-2 border-emerald-400 text-emerald-900 p-3.5 rounded-2xl font-bold text-sm sm:text-base animate-pop flex flex-col sm:flex-row items-center justify-between gap-2">
+                            <span>🌟 ${choice.reply}</span>
+                            <button onclick="nextGame2Scenario()" class="btn-3d bg-emerald-500 text-white border-emerald-700 px-4 py-1.5 rounded-xl font-black text-sm whitespace-nowrap">
+                                繼續下一關 ➡️
+                            </button>
+                        </div>`;
+                } else {
+                    playGentleTryAgain();
+                    fb.innerHTML = `
+                        <div class="bg-amber-100 border-2 border-amber-300 text-amber-900 p-3 rounded-2xl font-bold text-sm animate-pop">
+                            💡 ${choice.reply}
+                        </div>`;
+                }
+            });
+        }
+
+        function nextGame2Scenario() {
+            game2Idx = (game2Idx + 1) % SCENARIOS.length;
+            renderGame2();
+        }
+
+        /* ----------------------------------------------------------------
+           9. MODULE 5: GAME 3 - LISTEN & REPEAT STUDIO (小小跟讀家)
+        ---------------------------------------------------------------- */
+        let speakCardIdx = 0;
+        let isPracticingMic = false;
+
+        function renderSpeakCard() {
+            const card = SPEAKING_CARDS[speakCardIdx];
+            document.getElementById('speakIdx').textContent = speakCardIdx + 1;
+            document.getElementById('speakTotal').textContent = SPEAKING_CARDS.length;
+            document.getElementById('speakEmoji').textContent = card.emoji;
+            document.getElementById('speakPhraseDisplay').innerHTML = renderAnnotatedText(card.phrase, 'text-3xl sm:text-5xl');
+            document.getElementById('speakContext').textContent = card.context;
+            document.getElementById('speakFeedback').innerHTML = '';
+        }
+
+        function listenSpeakCard() {
+            const card = SPEAKING_CARDS[speakCardIdx];
+            speakPhrase(card.phrase, true);
+        }
+
+        function prevSpeakCard() {
+            playClickSound();
+            speakCardIdx = (speakCardIdx - 1 + SPEAKING_CARDS.length) % SPEAKING_CARDS.length;
+            renderSpeakCard();
+        }
+
+        function nextSpeakCard() {
+            playClickSound();
+            speakCardIdx = (speakCardIdx + 1) % SPEAKING_CARDS.length;
+            renderSpeakCard();
+        }
+
+        function startSpeakingPractice() {
+            if (isPracticingMic) return;
+            isPracticingMic = true;
+
+            const waveBox = document.getElementById('soundwaveBox');
+            const btnLabel = document.getElementById('micBtnLabel');
+            const feedback = document.getElementById('speakFeedback');
+
+            waveBox.classList.add('recording');
+            btnLabel.textContent = '正在聽你說喔...';
+            feedback.innerHTML = `<span class="text-rose-600 font-black animate-pulse">🎙️ 請大聲唸出上面的句子！</span>`;
+
+            // Try Web SpeechRecognition if supported, plus guaranteed kid-friendly encouragement timer
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            let recognition = null;
+            let finished = false;
+
+            const finishPractice = (heardText = '') => {
+                if (finished) return;
+                finished = true;
+                isPracticingMic = false;
+                waveBox.classList.remove('recording');
+                btnLabel.textContent = '2. 按我大聲跟讀';
+
+                addStar(1, '🎤 發音超響亮！獲得小小演說家星星！');
+                feedback.innerHTML = `
+                    <div class="bg-amber-100 border-2 border-amber-400 text-amber-950 px-5 py-3 rounded-2xl font-black text-base animate-pop">
+                        🏅 太棒了！你唸得又清楚又有精神！
+                        ${heardText ? `<div class="text-xs font-bold text-amber-700 mt-1">系統聽到你說：「${heardText}」</div>` : ''}
+                    </div>`;
+            };
+
+            if (SpeechRecognition) {
+                try {
+                    recognition = new SpeechRecognition();
+                    recognition.lang = 'zh-TW';
+                    recognition.interimResults = false;
+                    recognition.maxAlternatives = 1;
+
+                    recognition.onresult = (event) => {
+                        const transcript = event.results[0][0].transcript;
+                        finishPractice(transcript);
+                    };
+                    recognition.onerror = () => finishPractice();
+                    recognition.onend = () => finishPractice();
+                    recognition.start();
+                } catch (e) {
+                    setTimeout(() => finishPractice(), 2600);
+                }
+            } else {
+                // Fallback visual soundwave timer for browsers without SpeechRecognition
+                setTimeout(() => finishPractice(), 2600);
+            }
+
+            // Safety max timeout (4 seconds) so kids never get stuck
+            setTimeout(() => {
+                if (recognition) {
+                    try { recognition.stop(); } catch (e) {}
+                }
+                finishPractice();
+            }, 4000);
+        }
+
+        /* ----------------------------------------------------------------
+           10. MODALS & INITIALIZATION
+        ---------------------------------------------------------------- */
+        function openStickerModal() {
+            playClickSound();
+            const grid = document.getElementById('stickerGrid');
+            grid.innerHTML = STICKERS.map(s => {
+                const unlocked = stars >= s.req;
+                return `
+                <div class="rounded-2xl p-3 border-2 ${unlocked ? 'bg-amber-50 border-amber-400 shadow-sm' : 'bg-slate-100 border-slate-200 opacity-60'} flex flex-col items-center">
+                    <div class="text-4xl sm:text-5xl mb-1 ${unlocked ? 'animate-bounce-slow' : 'grayscale'}">${s.icon}</div>
+                    <div class="font-black text-xs sm:text-sm text-slate-800">${s.name}</div>
+                    <div class="text-[11px] font-bold mt-1 ${unlocked ? 'text-emerald-600' : 'text-slate-500'}">
+                        ${unlocked ? '✅ 已解鎖' : `需 ${s.req} 顆 ⭐`}
+                    </div>
+                </div>`;
+            }).join('');
+
+            document.getElementById('stickerModal').classList.remove('hidden');
+        }
+
+        function closeStickerModal() {
+            playClickSound();
+            document.getElementById('stickerModal').classList.add('hidden');
+        }
+
+        function toggleGuideModal(show) {
+            playClickSound();
+            const modal = document.getElementById('guideModal');
+            if (show) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
+        }
+
+        function refreshAllViews() {
+            renderDialogues();
+            renderVocabCards();
+            renderGame2();
+            renderSpeakCard();
+        }
+
+        // Boot app on load
+        window.addEventListener('DOMContentLoaded', () => {
+            refreshAllViews();
+        });
+    </script>
+</body>
+</html>
