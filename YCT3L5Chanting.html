@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Let's Chant 05-03 儿童互动口语练习</title>
+<style>
+  /* ================= 全局与儿童友好风格 CSS ================= */
+  :root {
+    --bg-gradient: linear-gradient(135deg, #e0f7fa 0%, #fff9c4 100%);
+    --header-teal: #26c6da;
+    --header-badge: #4dd0e1;
+    --card-yellow: #ffe066;
+    --card-yellow-fold: #d4b13b;
+    --girl-color: #ff6b81;
+    --girl-bg: #fff0f3;
+    --boy-color: #1e90ff;
+    --boy-bg: #eef7ff;
+    --text-dark: #2f3542;
+    --text-muted: #57606f;
+    --success-green: #2ed573;
+    --warn-orange: #ffa502;
+    --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+    --radius-lg: 22px;
+    --radius-md: 14px;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Comic Sans MS", sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-dark);
+    min-height: 100vh;
+    padding: 20px 15px 50px;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  /* ================= 顶部横幅与仪表盘 ================= */
+  .top-banner {
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    padding: 18px 24px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 24px;
+    border-bottom: 6px solid var(--header-teal);
+  }
+
+  .title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .chant-badge {
+    background: var(--header-teal);
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 800;
+    padding: 8px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(38, 198, 218, 0.35);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lesson-tag {
+    background: #e0f7fa;
+    color: #00838f;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 1.05rem;
+  }
+
+  .controls-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .score-board {
+    background: #fff8e1;
+    border: 2px solid #ffd54f;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-weight: 700;
+    color: #f57f17;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .toggle-pinyin-btn {
+    background: #f1f2f6;
+    border: 2px solid #ced6e0;
+    color: var(--text-dark);
+    padding: 8px 14px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.92rem;
+  }
+
+  .toggle-pinyin-btn:hover {
+    background: #dfe4ea;
+  }
+
+  .toggle-pinyin-btn.active {
+    background: #70a1ff;
+    color: white;
+    border-color: #1e90ff;
+  }
+
+  /* ================= 提示说明条 ================= */
+  .tips-box {
+    background: rgba(255, 255, 255, 0.85);
+    border-left: 5px solid var(--warn-orange);
+    padding: 12px 18px;
+    border-radius: 12px;
+    margin-bottom: 22px;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ================= 便签风格对话卡片 ================= */
+  .chant-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .chant-card {
+    background: var(--card-yellow);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    transition: transform 0.25s ease;
+    border: 3px solid #f7d046;
+  }
+
+  .chant-card:hover {
+    transform: translateY(-3px);
+  }
+
+  /* 右下角折角效果还原原图 */
+  .chant-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--card-yellow-fold) 50%, #f5f6fa 50%);
+    border-top-left-radius: 10px;
+    box-shadow: -2px -2px 5px rgba(0,0,0,0.06);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .role-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  }
+
+  .role-girl {
+    background: var(--girl-bg);
+    color: var(--girl-color);
+    border: 2px solid var(--girl-color);
+  }
+
+  .role-boy {
+    background: var(--boy-bg);
+    color: var(--boy-color);
+    border: 2px solid var(--boy-color);
+  }
+
+  .food-icons {
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+  }
+
+  /* ================= 文本与拼音排版 ================= */
+  .lines-container {
+    background: rgba(255, 255, 255, 0.72);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin-bottom: 18px;
+  }
+
+  .sentence-block {
+    margin-bottom: 12px;
+  }
+
+  .sentence-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .ruby-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    align-items: flex-end;
+  }
+
+  .word-unit {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .pinyin {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #d35400;
+    margin-bottom: 2px;
+    min-height: 1.2em;
+    transition: opacity 0.2s;
+  }
+
+  body.hide-pinyin .pinyin {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .hanzi {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #1e272e;
+    letter-spacing: 1px;
+  }
+
+  /* ================= 按钮操作区 ================= */
+  .action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .btn {
+    border: none;
+    border-radius: 50px;
+    padding: 10px 18px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .btn:active {
+    transform: scale(0.96);
+  }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-sample {
+    background: #ffffff;
+    color: #0984e3;
+    border: 2px solid #74b9ff;
+  }
+
+  .btn-sample:hover:not(:disabled) {
+    background: #ebf5ff;
+  }
+
+  .btn-sample.playing {
+    background: #0984e3;
+    color: white;
+    animation: pulse-blue 1.2s infinite;
+  }
+
+  .btn-record {
+    background: #ff4757;
+    color: white;
+  }
+
+  .btn-record:hover:not(:disabled) {
+    background: #ff6b81;
+  }
+
+  .btn-record.recording {
+    background: #2f3542;
+    animation: pulse-red 1s infinite;
+  }
+
+  .btn-play-user {
+    background: #2ed573;
+    color: white;
+  }
+
+  .btn-play-user:hover:not(:disabled) {
+    background: #26af61;
+  }
+
+  .btn-download {
+    background: #ffa502;
+    color: white;
+    text-decoration: none;
+  }
+
+  .btn-download:hover {
+    background: #e59400;
+  }
+
+  /* ================= 评分与语音识别反馈区 ================= */
+  .result-panel {
+    margin-top: 14px;
+    background: #ffffff;
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    border: 2px dashed #ced6e0;
+  }
+
+  .result-panel.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .recognized-text {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+
+  .recognized-text strong {
+    color: var(--text-dark);
+  }
+
+  .score-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 12px;
+  }
+
+  .score-high {
+    background: #e3fcef;
+    color: #00875a;
+  }
+
+  .score-mid {
+    background: #fff7e6;
+    color: #d46b08;
+  }
+
+  .score-low {
+    background: #fff1f0;
+    color: #cf1322;
+  }
+
+  /* ================= 完成奖励弹窗 ================= */
+  .celebration-banner {
+    display: none;
+    margin-top: 26px;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+    border: 3px solid #ffffff;
+  }
+
+  .celebration-banner.show {
+    display: block;
+    animation: bounceIn 0.6s ease;
+  }
+
+  .celebration-banner h2 {
+    font-size: 1.6rem;
+    color: #b71540;
+    margin-bottom: 8px;
+  }
+
+  /* ================= 动画效果 ================= */
+  @keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7); }
+    70% { box-shadow: 0 0 0 12px rgba(255, 71, 87, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0); }
+  }
+
+  @keyframes pulse-blue {
+    0% { box-shadow: 0 0 0 0 rgba(9, 132, 227, 0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(9, 132, 227, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(9, 132, 227, 0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounceIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    60% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+
+  /* 手机与平板自适应 */
+  @media (max-width: 600px) {
+    .hanzi { font-size: 1.35rem; }
+    .pinyin { font-size: 0.85rem; }
+    .btn { padding: 9px 14px; font-size: 0.9rem; }
+    .top-banner { justify-content: center; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- 顶部标题与总分栏 -->
+  <header class="top-banner">
+    <div class="title-group">
+      <div class="chant-badge">🎵 Let's chant</div>
+      <span class="lesson-tag">💿 05-03</span>
+    </div>
+    <div class="controls-bar">
+      <button id="togglePinyinBtn" class="toggle-pinyin-btn active" onclick="togglePinyin()">👁️ 显示拼音</button>
+      <div class="score-board">
+        🏆 总平均分：<span id="totalScore">0</span> 分
+      </div>
+    </div>
+  </header>
+
+  <!-- 操作提示 -->
+  <div class="tips-box">
+    💡 <strong>练习小指南：</strong>先点击 <b>“🔊 听范例”</b> 听标准发音，再点击 <b>“🎤 开始跟读”</b> 大声朗读（请允许浏览器使用麦克风）。读完点击 <b>“⏹️ 停止录音”</b>，系统会自动为你打分，还可以回放和下载自己的录音哦！
+  </div>
+
+  <!-- 练习卡片列表 -->
+  <main id="chantList" class="chant-list"></main>
+
+  <!-- 全部完成鼓励区 -->
+  <div id="celebrationBanner" class="celebration-banner">
+    <h2>🎉 太棒了！你完成了全部跟读挑战！</h2>
+    <p id="finalComment" style="font-size: 1.1rem; color: #2f3542; font-weight: 600;"></p>
+  </div>
+</div>
+
+<script>
+  /* ================= 课程数据配置 ================= */
+  const chantData = [
+    {
+      id: 0,
+      role: "girl",
+      roleLabel: "👧 女生（nǚ）",
+      icons: "🥟😋",
+      sampleUrl: "https://files.catbox.moe/j69ggc.mp3",
+      targetText: "我饿了吃饺子你饿了吃什么",
+      lines: [
+        [
+          { py: "Wǒ", hz: "我" }, { py: "è", hz: "饿" }, { py: "le,", hz: "了，" },
+          { py: "chī", hz: "吃" }, { py: "jiǎo", hz: "饺" }, { py: "zi.", hz: "子。" }
+        ],
+        [
+          { py: "Nǐ", hz: "你" }, { py: "è", hz: "饿" }, { py: "le,", hz: "了，" },
+          { py: "chī", hz: "吃" }, { py: "shén", hz: "什" }, { py: "me?", hz: "么？" }
+        ]
+      ]
+    },
+    {
+      id: 1,
+      role: "boy",
+      roleLabel: "👦 男生（nán）",
+      icons: "🍚🍜🥟🥟",
+      sampleUrl: "https://files.catbox.moe/qkbgj4.mp3",
+      targetText: "米饭面条我最爱饺子包子也喜欢",
+      lines: [
+        [
+          { py: "Mǐ", hz: "米" }, { py: "fàn", hz: "饭" },
+          { py: "miàn", hz: "面" }, { py: "tiáor", hz: "条儿" },
+          { py: "wǒ", hz: "我" }, { py: "zuì", hz: "最" }, { py: "ài,", hz: "爱，" }
+        ],
+        [
+          { py: "jiǎo", hz: "饺" }, { py: "zi", hz: "子" },
+          { py: "bāo", hz: "包" }, { py: "zi", hz: "子" },
+          { py: "yě", hz: "也" }, { py: "xǐ", hz: "喜" }, { py: "huan.", hz: "欢。" }
+        ]
+      ]
+    },
+    {
+      id: 2,
+      role: "girl",
+      roleLabel: "👧 女生（nǚ）",
+      icons: "🥢🥟❓",
+      sampleUrl: "https://files.catbox.moe/y6wek3.mp3",
+      targetText: "再吃一个饺子吧",
+      lines: [
+        [
+          { py: "Zài", hz: "再" }, { py: "chī", hz: "吃" },
+          { py: "yí", hz: "一" }, { py: "ge", hz: "个" },
+          { py: "jiǎo", hz: "饺" }, { py: "zi", hz: "子" }, { py: "ba?", hz: "吧？" }
+        ]
+      ]
+    },
+    {
+      id: 3,
+      role: "boy",
+      roleLabel: "👦 男生（nán）",
+      icons: "🫃😄✋",
+      sampleUrl: "https://files.catbox.moe/1ml0yl.mp3",
+      targetText: "不吃了太饱了",
+      lines: [
+        [
+          { py: "Bù", hz: "不" }, { py: "chī", hz: "吃" }, { py: "le,", hz: "了，" },
+          { py: "tài", hz: "太" }, { py: "bǎo", hz: "饱" }, { py: "le!", hz: "了！" }
+        ]
+      ]
+    }
+  ];
+
+  /* ================= 状态管理 ================= */
+  const state = {
+    scores: {},
+    recordings: {}, // 存储 { url, blob, mimeExt }
+    activeSampleAudio: null,
+    activeSampleBtn: null,
+    isRecording: false,
+    currentRecIndex: null,
+    mediaRecorder: null,
+    audioChunks: [],
+    recognition: null,
+    recognizedTranscript: ""
+  };
+
+  /* ================= 渲染页面卡片 ================= */
+  function renderCards() {
+    const container = document.getElementById("chantList");
+    container.innerHTML = chantData.map(item => {
+      const roleClass = item.role === "girl" ? "role-girl" : "role-boy";
+      const linesHtml = item.lines.map(line => `
+        <div class="sentence-block">
+          <div class="ruby-row">
+            ${line.map(word => `
+              <div class="word-unit">
+                <span class="pinyin">${word.py}</span>
+                <span class="hanzi">${word.hz}</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `).join("");
+
+      return `
+        <section class="chant-card" id="card-${item.id}">
+          <div class="card-header">
+            <span class="role-badge ${roleClass}">${item.roleLabel}</span>
+            <span class="food-icons">${item.icons}</span>
+          </div>
+
+          <div class="lines-container">
+            ${linesHtml}
+          </div>
+
+          <div class="action-bar">
+            <button class="btn btn-sample" id="sampleBtn-${item.id}" onclick="playSample(${item.id})">
+              🔊 听范例
+            </button>
+
+            <button class="btn btn-record" id="recBtn-${item.id}" onclick="toggleRecord(${item.id})">
+              🎤 开始跟读
+            </button>
+
+            <button class="btn btn-play-user" id="playUserBtn-${item.id}" onclick="playUserAudio(${item.id})" disabled>
+              ▶️ 回放录音
+            </button>
+
+            <a class="btn btn-download" id="downloadBtn-${item.id}" style="display:none;" download="chant_05-03_第${item.id + 1}段.webm">
+              💾 下载录音
+            </a>
+          </div>
+
+          <div class="result-panel" id="resultPanel-${item.id}">
+            <div class="recognized-text" id="recText-${item.id}">
+              识别结果：等待录音...
+            </div>
+            <div class="score-badge score-high" id="scoreBadge-${item.id}">
+              ⭐ 0 分
+            </div>
+          </div>
+        </section>
+      `;
+    }).join("");
+  }
+
+  /* ================= 显示/隐藏拼音 ================= */
+  function togglePinyin() {
+    document.body.classList.toggle("hide-pinyin");
+    const btn = document.getElementById("togglePinyinBtn");
+    const isHidden = document.body.classList.contains("hide-pinyin");
+    btn.classList.toggle("active", !isHidden);
+    btn.textContent = isHidden ? "🙈 拼音已隐藏" : "👁️ 显示拼音";
+  }
+
+  /* ================= 播放范例音频 ================= */
+  function playSample(id) {
+    const item = chantData[id];
+    const btn = document.getElementById(`sampleBtn-${id}`);
+
+    // 如果正在播放同一段，则停止
+    if (state.activeSampleAudio && state.activeSampleBtn === btn) {
+      state.activeSampleAudio.pause();
+      state.activeSampleAudio.currentTime = 0;
+      btn.classList.remove("playing");
+      btn.innerHTML = "🔊 听范例";
+      state.activeSampleAudio = null;
+      state.activeSampleBtn = null;
+      return;
+    }
+
+    // 停止其他正在播放的范例
+    if (state.activeSampleAudio) {
+      state.activeSampleAudio.pause();
+      if (state.activeSampleBtn) {
+        state.activeSampleBtn.classList.remove("playing");
+        state.activeSampleBtn.innerHTML = "🔊 听范例";
+      }
+    }
+
+    const audio = new Audio(item.sampleUrl);
+    state.activeSampleAudio = audio;
+    state.activeSampleBtn = btn;
+
+    btn.classList.add("playing");
+    btn.innerHTML = "⏸️ 播放中...";
+
+    audio.play().catch(err => {
+      alert("音频加载失败，请检查网络连接！");
+      btn.classList.remove("playing");
+      btn.innerHTML = "🔊 听范例";
+    });
+
+    audio.onended = () => {
+      btn.classList.remove("playing");
+      btn.innerHTML = "🔊 听范例";
+      state.activeSampleAudio = null;
+      state.activeSampleBtn = null;
+    };
+  }
+
+  /* ================= 录音与语音识别控制 ================= */
+  async function toggleRecord(id) {
+    if (state.isRecording) {
+      if (state.currentRecIndex === id) {
+        stopRecording();
+      } else {
+        alert("请先停止当前正在进行的录音哦！");
+      }
+      return;
+    }
+
+    // 停止范例播放以免串音
+    if (state.activeSampleAudio) {
+      state.activeSampleAudio.pause();
+      if (state.activeSampleBtn) {
+        state.activeSampleBtn.classList.remove("playing");
+        state.activeSampleBtn.innerHTML = "🔊 听范例";
+      }
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      startRecording(id, stream);
+    } catch (err) {
+      alert("无法访问麦克风！请确保在浏览器设置中允许麦克风权限，并使用 HTTPS 或本地环境打开网页。");
+    }
+  }
+
+  function startRecording(id, stream) {
+    state.isRecording = true;
+    state.currentRecIndex = id;
+    state.audioChunks = [];
+    state.recognizedTranscript = "";
+
+    const recBtn = document.getElementById(`recBtn-${id}`);
+    recBtn.classList.add("recording");
+    recBtn.innerHTML = "⏹️ 停止录音";
+
+    // 1. 初始化 MediaRecorder 录音
+    const mimeType = MediaRecorder.isTypeSupported("audio/webm") ? "audio/webm" : "audio/mp4";
+    const ext = mimeType.includes("webm") ? "webm" : "m4a";
+    const mediaRecorder = new MediaRecorder(stream, { mimeType });
+    state.mediaRecorder = mediaRecorder;
+
+    mediaRecorder.ondataavailable = (e) => {
+      if (e.data.size > 0) state.audioChunks.push(e.data);
+    };
+
+    mediaRecorder.onstop = () => {
+      // 关闭麦克风轨道
+      stream.getTracks().forEach(track => track.stop());
+
+      const audioBlob = new Blob(state.audioChunks, { type: mimeType });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      state.recordings[id] = { url: audioUrl, blob: audioBlob };
+
+      // 启用回放与下载按钮
+      const playBtn = document.getElementById(`playUserBtn-${id}`);
+      playBtn.disabled = false;
+
+      const dlBtn = document.getElementById(`downloadBtn-${id}`);
+      dlBtn.href = audioUrl;
+      dlBtn.download = `LetsChant_05-03_第${id + 1}段.${ext}`;
+      dlBtn.style.display = "inline-flex";
+
+      // 延迟 400ms 等待语音识别最后结果返回后计算分数
+      setTimeout(() => {
+        evaluateSpeech(id, state.recognizedTranscript);
+      }, 450);
+    };
+
+    mediaRecorder.start();
+
+    // 2. 初始化 Web Speech API 语音识别
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.lang = "zh-CN";
+      recognition.continuous = true;
+      recognition.interimResults = true;
+
+      recognition.onresult = (event) => {
+        let finalStr = "";
+        for (let i = 0; i < event.results.length; i++) {
+          finalStr += event.results[i][0].transcript;
+        }
+        state.recognizedTranscript = finalStr;
+      };
+
+      recognition.onerror = (e) => {
+        console.warn("语音识别警告:", e.error);
+      };
+
+      state.recognition = recognition;
+      recognition.start();
+    }
+  }
+
+  function stopRecording() {
+    const id = state.currentRecIndex;
+    if (state.mediaRecorder && state.mediaRecorder.state !== "inactive") {
+      state.mediaRecorder.stop();
+    }
+    if (state.recognition) {
+      try { state.recognition.stop(); } catch (e) {}
+    }
+
+    const recBtn = document.getElementById(`recBtn-${id}`);
+    recBtn.classList.remove("recording");
+    recBtn.innerHTML = "🎤 重新跟读";
+
+    state.isRecording = false;
+    state.currentRecIndex = null;
+  }
+
+  /* ================= 回放用户录音 ================= */
+  function playUserAudio(id) {
+    const rec = state.recordings[id];
+    if (!rec) return;
+    const audio = new Audio(rec.url);
+    audio.play();
+  }
+
+  /* ================= 语音识别文本比对与儿童友好评分算法 ================= */
+  function cleanChinese(str) {
+    // 去除标点、空格，并将“儿”字标准化以便儿童口语容错
+    return str.replace(/[^\u4e00-\u9fa5]/g, "").replace(/儿/g, "");
+  }
+
+  function calculateSimilarity(target, spoken) {
+    const s1 = cleanChinese(target);
+    const s2 = cleanChinese(spoken);
+    if (!s2) return 0;
+    if (s1 === s2) return 100;
+
+    // Levenshtein 编辑距离算法
+    const len1 = s1.length;
+    const len2 = s2.length;
+    const dp = Array.from({ length: len1 + 1 }, () => Array(len2 + 1).fill(0));
+
+    for (let i = 0; i <= len1; i++) dp[i][0] = i;
+    for (let j = 0; j <= len2; j++) dp[0][j] = j;
+
+    for (let i = 1; i <= len1; i++) {
+      for (let j = 1; j <= len2; j++) {
+        const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+        dp[i][j] = Math.min(
+          dp[i - 1][j] + 1,
+          dp[i][j - 1] + 1,
+          dp[i - 1][j - 1] + cost
+        );
+      }
+    }
+
+    const maxLen = Math.max(len1, len2);
+    const rawRatio = (maxLen - dp[len1][len2]) / maxLen;
+    // 儿童鼓励加权：只要识别对大部分字，给予适当鼓励分
+    let score = Math.round(rawRatio * 100);
+    if (score >= 85) score = Math.min(100, score + 5);
+    return Math.max(0, score);
+  }
+
+  function evaluateSpeech(id, transcript) {
+    const item = chantData[id];
+    const panel = document.getElementById(`resultPanel-${id}`);
+    const recTextEl = document.getElementById(`recText-${id}`);
+    const scoreBadgeEl = document.getElementById(`scoreBadge-${id}`);
+
+    panel.classList.add("show");
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      recTextEl.innerHTML = `⚠️ 当前浏览器不支持自动语音评分（建议使用 Chrome / Edge），但你的录音已成功保存！`;
+      scoreBadgeEl.className = "score-badge score-high";
+      scoreBadgeEl.innerHTML = `🌟 已完成`;
+      state.scores[id] = 100;
+      updateTotalScore();
+      return;
+    }
+
+    if (!transcript || transcript.trim() === "") {
+      recTextEl.innerHTML = `🗣️ <strong>未听清声音</strong>，请靠近麦克风再试一次哦！`;
+      scoreBadgeEl.className = "score-badge score-low";
+      scoreBadgeEl.innerHTML = `💪 0 分`;
+      state.scores[id] = 0;
+      updateTotalScore();
+      return;
+    }
+
+    const score = calculateSimilarity(item.targetText, transcript);
+    state.scores[id] = score;
+
+    let badgeClass = "score-low";
+    let stars = "💪 加油";
+    if (score >= 85) {
+      badgeClass = "score-high";
+      stars = "⭐⭐⭐ 太棒了";
+    } else if (score >= 60) {
+      badgeClass = "score-mid";
+      stars = "⭐⭐ 不错哦";
+    }
+
+    recTextEl.innerHTML = `🗣️ 我听到你说：<strong>“${transcript}”</strong>`;
+    scoreBadgeEl.className = `score-badge ${badgeClass}`;
+    scoreBadgeEl.innerHTML = `${stars} · ${score} 分`;
+
+    updateTotalScore();
+  }
+
+  /* ================= 更新总平均分与通关提示 ================= */
+  function updateTotalScore() {
+    const completedIds = Object.keys(state.scores);
+    if (completedIds.length === 0) return;
+
+    const sum = completedIds.reduce((acc, key) => acc + state.scores[key], 0);
+    const avg = Math.round(sum / chantData.length);
+    document.getElementById("totalScore").textContent = avg;
+
+    if (completedIds.length === chantData.length) {
+      const banner = document.getElementById("celebrationBanner");
+      const comment = document.getElementById("finalComment");
+      banner.classList.add("show");
+
+      if (avg >= 85) {
+        comment.textContent = `你的最终平均分是 ${avg} 分！荣获“🏅 小小汉语朗诵家”称号！`;
+      } else if (avg >= 60) {
+        comment.textContent = `你的最终平均分是 ${avg} 分！表现很棒，再多听几遍范例一定能拿满分！`;
+      } else {
+        comment.textContent = `你的最终平均分是 ${avg} 分！勇敢开口就是胜利，点击“重新跟读”挑战更高分吧！`;
+      }
+    }
+  }
+
+  // 页面初始化
+  renderCards();
+</script>
+</body>
+</html>
